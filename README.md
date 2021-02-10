@@ -1,5 +1,5 @@
 # DEEP_2021
-DEEP code, causal tree, interaction tree
+DEEP code (R), causal tree code (R), interaction tree code (R), uplift tree code (Python)
 
 To run experiments using synthetic_data:
 1. in synthetic_data folder, run sz001 sz002 sz003 to generate data
