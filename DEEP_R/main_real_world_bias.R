@@ -2,7 +2,7 @@
 ### Output: DEEP results
 
 rm(list = ls())
-# setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 start_time <- Sys.time()
 library(pcalg)
@@ -20,10 +20,10 @@ source('stratification.R')
 # significance level in PC-select algorithm
 alpha = 0.01
 
-# # US census
-# data_name = 'US_census'
-# data_treatment = 'educ.12'
-# data_outcome = 'income.50K'
+# US census
+data_name = 'US_census'
+data_treatment = 'educ.12'
+data_outcome = 'income.50K'
 
 # # email analytics
 # data_name = 'email_analytics'
@@ -35,10 +35,10 @@ alpha = 0.01
 # data_treatment = 'segment'
 # data_outcome = 'visit'
 
-# email analytics women
-data_name = 'email_analytics_women'
-data_treatment = 'segment'
-data_outcome = 'visit'
+# # email analytics women
+# data_name = 'email_analytics_women'
+# data_treatment = 'segment'
+# data_outcome = 'visit'
 
 # # marketing campaign
 # data_name = 'marketing_campaign'
@@ -61,12 +61,14 @@ data_outcome = 'visit'
 # data_outcome = 'visit'
 
 ################################################################################
+dir.create(paste('../real_world_data/data/model_vs_contingency_table_', data_name, '_deep', sep=''))
+
 for (batch in 1:10) {
   for (n_fold in 1:2) {
     
     # data input
-    data_file = paste("../real_world_data/data_",data_name,"/model_vs_contingency_table_",data_name,"/cross_validation_time_",batch,"_fold_",n_fold,"_for_model.csv", sep = "")
-    output_csv = paste("../real_world_data/data_",data_name,"/model_vs_contingency_table_",data_name,"_deep/cross_validation_batch_",batch,"_fold_",n_fold,"_patterns.csv", sep="")
+    data_file = paste("../real_world_data/data/model_vs_contingency_table_",data_name,"/cross_validation_time_",batch,"_fold_",n_fold,"_for_model.csv", sep = "")
+    output_csv = paste("../real_world_data/data/model_vs_contingency_table_",data_name,"_deep/cross_validation_batch_",batch,"_fold_",n_fold,"_patterns.csv", sep="")
     
     input_data = read.csv(data_file)
     # colnames(input_data) = toupper(colnames(input_data)) 

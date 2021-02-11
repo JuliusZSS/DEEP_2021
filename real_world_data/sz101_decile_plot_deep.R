@@ -2,7 +2,7 @@
 # Output: decile plot
 
 rm(list = ls())
-# setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 library(dplyr)
 library(matrixStats)
@@ -10,10 +10,10 @@ library(ggplot2)
 source('get_contingency_table.R')
 source('get_causal_effect_from_contingency_table.R')
 
-# # import data
-# data_name = 'US_census'
-# data_treatment = 'educ.12'
-# data_outcome = 'income.50K'
+# import data
+data_name = 'US_census'
+data_treatment = 'educ.12'
+data_outcome = 'income.50K'
 
 # # email analytics
 # data_name = 'email_analytics'
@@ -51,6 +51,7 @@ source('get_causal_effect_from_contingency_table.R')
 # data_outcome = 'visit'
 
 ################################################################################
+
 decile_phi = data.frame(matrix(nrow = 10, ncol = 20))
 
 for (n_batch in 1:10) {
@@ -58,8 +59,8 @@ for (n_batch in 1:10) {
     
     print(paste(n_batch, n_fold))
     
-    ground_truth_file = paste('data_',data_name,'/model_vs_contingency_table_',data_name,'/cross_validation_time_',n_batch,'_fold_',n_fold,'_as_ground_truth.csv',sep = "")
-    patterns_file = paste('data_',data_name,'/model_vs_contingency_table_',data_name,'_deep/cross_validation_batch_',n_batch,'_fold_',n_fold,'_patterns.csv',sep="")
+    ground_truth_file = paste('data/model_vs_contingency_table_',data_name,'/cross_validation_time_',n_batch,'_fold_',n_fold,'_as_ground_truth.csv',sep = "")
+    patterns_file = paste('data/model_vs_contingency_table_',data_name,'_deep/cross_validation_batch_',n_batch,'_fold_',n_fold,'_patterns.csv',sep="")
     
     
     # clean patterns
@@ -142,7 +143,7 @@ decile_phi['phi_std'] = rowSds(as.matrix(decile_phi[,1:10]))
 plot_data <- data.frame(percentile=format(round(0:9), nsmall=1),value=decile_phi['phi_mean'],sd=decile_phi['phi_std'])
 
 ### decile plot and save it
-jpeg(paste('data_',data_name,'/deep_2_fold_10_times_decile_plot_',data_name,'.png',sep=''))
+jpeg(paste('../real_world_data/data/deep_2_fold_10_times_decile_plot_',data_name,'.png',sep=''))
 decile_plot <- ggplot(plot_data) +
   geom_bar(aes(x=percentile, y=phi_mean), stat="identity", fill="skyblue", alpha=0.7) +
   geom_errorbar(aes(x=percentile, ymin=phi_mean-phi_std, ymax=phi_mean+phi_std), width=0.4, colour="orange", alpha=0.9, size=1.3)

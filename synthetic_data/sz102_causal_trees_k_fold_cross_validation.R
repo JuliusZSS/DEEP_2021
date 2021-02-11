@@ -4,19 +4,22 @@
 # https://ml-in-econ.appspot.com/lab3.html
 
 rm(list = ls())
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 # if (!requireNamespace("BiocManager", quietly = TRUE))
 #   install.packages("BiocManager")
 # BiocManager::install("Rgraphviz")
 
 # set hyper-parameters ####
-p <- 40    # number of total covariants
+p <- 20    # number of total covariants (20, 40, 60, 80, 100)
 pt <- 4    # number of covariants affecting treatment effects
 py <- 4    # number of covariants affecting outcomes but not treatment effects
-n <- 80000    # total size of the dataset ### change made
+n <- 10000    # total size of the dataset ### change made (5000, 10000, 20000, 40000, 60000)
 
 # set number of loops here ####
 number_of_batches <- 10
+
+dir.create(paste('data',sep=''))
 
 # run self training causal trees ####
 source("sz101_causal_trees.R")

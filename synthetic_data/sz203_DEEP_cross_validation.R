@@ -5,10 +5,12 @@
 rm(list = ls())
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
-data_names = c('data_20_4_4', 'data_40_4_4', 'data_60_4_4', 'data_80_4_4', 'data_100_4_4')
-# data_names = c('data_80_4_4')
+# data_names = c('data_20_4_4', 'data_40_4_4', 'data_60_4_4', 'data_80_4_4', 'data_100_4_4')
+data_names = 'data'
 
 for (data_name in data_names) {
+  
+  dir.create(paste(data_name, '/deep_cross_validation/results', sep = ""))
   
   for (n_batch in 1:10) {
     

@@ -15,25 +15,25 @@ library(devtools)
 `%nin%` = Negate(`%in%`)
 
 # read real world data ####
-# # US census
-# data_name = 'US_census'
-# file_1 = read.csv('input_data/adult_binary.csv')
-# file_2 = read.csv('input_data/census-income_binary.csv')
-# # define treatment and outcome
-# treatment = 'educ.12'
-# outcome = 'income.50K'
-# # combine files
-# data = rbind(file_1, file_2)
-
-# marketing campaign
-data_name = 'marketing_campaign'
-file_1 = read.csv('input_data/marketing_campaign_train.csv')
-file_2 = read.csv('input_data/marketing_campaign_valid.csv')
+# US census
+data_name = 'US_census'
+file_1 = read.csv('input_data/adult_binary.csv')
+file_2 = read.csv('input_data/census-income_binary.csv')
 # define treatment and outcome
-treatment = 'TREATMENT'
-outcome = 'PURCHASE'
+treatment = 'educ.12'
+outcome = 'income.50K'
 # combine files
 data = rbind(file_1, file_2)
+
+# # marketing campaign
+# data_name = 'marketing_campaign'
+# file_1 = read.csv('input_data/marketing_campaign_train.csv')
+# file_2 = read.csv('input_data/marketing_campaign_valid.csv')
+# # define treatment and outcome
+# treatment = 'TREATMENT'
+# outcome = 'PURCHASE'
+# # combine files
+# data = rbind(file_1, file_2)
 
 # # email analytics
 # data_name = 'email_analytics'
@@ -90,7 +90,8 @@ data = rbind(file_1, file_2)
 # data = file
 
 ################################################################################
-dir.create(paste('data/model_vs_contingency_table_',data_name,sep=''))
+dir.create('real_world_data/data')
+dir.create(paste('real_world_data/data/model_vs_contingency_table_',data_name,sep=''))
 
 ### 10 times 2-fold cross validation
 cross_validation_times = 10
@@ -116,10 +117,6 @@ for (current_cross_validation_time in 1:cross_validation_times) {
     data_for_causal_tree = data[data_folds[current_fold][[1]],]
     data_as_ground_truth = data[data_folds[-current_fold][[1]],]
     
-    ### REMOVE AFTER TESTING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    # data_for_causal_tree = data_for_causal_tree[1:10000,]
-    # data_as_ground_truth = data_as_ground_truth[1:10000,]
-
     ### train causal tree
     ### create formula
     formula_ct = formula(paste(outcome,paste(names(data)[which(colnames(data)!=outcome & colnames(data)!=treatment)],collapse='+'),sep='~'))

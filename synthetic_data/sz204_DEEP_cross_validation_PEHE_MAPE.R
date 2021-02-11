@@ -13,7 +13,8 @@ library(matrixStats)
 output_csv = data.frame(matrix(nrow = 10, ncol = 6))
 colnames(output_csv) = c('PEHE', 'PEHE_mean', 'PEHE_std', 'MAPE', 'MAPE_mean', 'MAPE_std')
 
-data_names = c('data_20_4_4','data_40_4_4','data_60_4_4','data_80_4_4','data_100_4_4')
+# data_names = c('data_20_4_4','data_40_4_4','data_60_4_4','data_80_4_4','data_100_4_4')
+data_names = 'data'
 
 for (data_name in data_names) {
   for (n_batch in 1:10) {

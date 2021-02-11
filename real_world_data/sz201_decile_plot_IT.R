@@ -2,6 +2,7 @@
 # Output: decile plot
 
 rm(list = ls())
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 library(matrixStats)
 library(dplyr)
 library(ggplot2)
@@ -9,7 +10,7 @@ source('get_contingency_table.R')
 source('get_causal_effect_from_contingency_table.R')
 
 # # US census
-# data_name = 'US_census'
+data_name = 'US_census'
 
 # # marketing campaign
 # data_name = 'marketing_campaign'
@@ -39,7 +40,7 @@ decile_phi = data.frame(matrix(nrow = 10, ncol = 20))
 for (n_batch in 1:10) {
   for (n_fold in 1:2) {
     
-    file_1 = paste('data_',data_name,'/model_vs_contingency_table_',data_name,'_IT/cross_validation_batch_',n_batch,'_fold_',n_fold,'_results.csv',sep='')
+    file_1 = paste('data/model_vs_contingency_table_',data_name,'_IT/cross_validation_batch_',n_batch,'_fold_',n_fold,'_results.csv',sep='')
     data_1 = read.csv(file_1)
     
     # decile part
@@ -72,7 +73,7 @@ decile_phi['phi_std'] = rowSds(as.matrix(decile_phi[,1:10]))
 plot_data <- data.frame(percentile=format(round(1:10), nsmall=0),value=decile_phi['phi_mean'],sd=decile_phi['phi_std'])
 
 ### decile plot and save it
-jpeg(paste('data_',data_name,'/IT_2_fold_10_times_decile_plot_',data_name,'.png',sep=''))
+jpeg(paste('data/IT_2_fold_10_times_decile_plot_',data_name,'.png',sep=''))
 decile_plot <- ggplot(plot_data) +
   geom_bar(aes(x=percentile, y=phi_mean), stat="identity", fill="skyblue", alpha=0.7) +
   geom_errorbar(aes(x=percentile, ymin=phi_mean-phi_std, ymax=phi_mean+phi_std), width=0.4, colour="orange", alpha=0.9, size=1.3) +

@@ -2,6 +2,7 @@
 # Output: interaction trees result
 
 remove(list = ls())
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 source('Functions-IT.R')
 source('get_causal_effect_from_contingency_table.R')
 
@@ -10,11 +11,11 @@ source('get_causal_effect_from_contingency_table.R')
 # Shisheng starts here... 
 # =============================================================
 # import data 
-bootstrap = 25    # recommanded min 25 max 100
+bootstrap = 25    # recommended min 25 max 100
 
-# data_name = 'US_census'
-# treatment = 'educ.12'
-# outcome = 'income.50K'
+data_name = 'US_census'
+treatment = 'educ.12'
+outcome = 'income.50K'
 
 # data_name = 'marketing_campaign'
 # treatment = 'TREATMENT'
@@ -45,18 +46,19 @@ bootstrap = 25    # recommanded min 25 max 100
 # outcome = 'visit'
 
 ################################################################################
-  
+dir.create(paste('../real_world_data/data/model_vs_contingency_table_', data_name, '_IT', sep=''))
+
 for (n_batch in 1:10) {
   
   for (n_fold in 1:2) {
     
-    file_1 = paste('../real_world_data/data_',data_name,'/model_vs_contingency_table_',data_name,'/cross_validation_time_',n_batch,'_fold_',n_fold,'_for_model.csv',sep='')
+    file_1 = paste('../real_world_data/data/model_vs_contingency_table_',data_name,'/cross_validation_time_',n_batch,'_fold_',n_fold,'_for_model.csv',sep='')
     data_1 = read.csv(file_1)
-    file_2 = paste('../real_world_data/data_',data_name,'/model_vs_contingency_table_',data_name,'/cross_validation_time_',n_batch,'_fold_',n_fold,'_as_ground_truth.csv',sep='')
+    file_2 = paste('../real_world_data/data/model_vs_contingency_table_',data_name,'/cross_validation_time_',n_batch,'_fold_',n_fold,'_as_ground_truth.csv',sep='')
     data_2 = read.csv(file_2)
-    output_png = paste('../real_world_data/data_',data_name,'/model_vs_contingency_table_',data_name,'_IT/cross_validation_time_',n_batch,'_fold_',n_fold,'.png',sep='')
-    output_file = paste('../real_world_data/data_',data_name,'/model_vs_contingency_table_',data_name,'_IT/model_vs_contingency_table_cv_',n_batch,'_fold_',n_fold,'.csv',sep='')
-    csv_for_decile = paste('../real_world_data/data_',data_name,'/model_vs_contingency_table_',data_name,'_IT/cross_validation_batch_',n_batch,'_fold_',n_fold,'_results.csv',sep='')
+    output_png = paste('../real_world_data/data/model_vs_contingency_table_',data_name,'_IT/cross_validation_time_',n_batch,'_fold_',n_fold,'.png',sep='')
+    output_file = paste('../real_world_data/data/model_vs_contingency_table_',data_name,'_IT/model_vs_contingency_table_cv_',n_batch,'_fold_',n_fold,'.csv',sep='')
+    csv_for_decile = paste('../real_world_data/data/model_vs_contingency_table_',data_name,'_IT/cross_validation_batch_',n_batch,'_fold_',n_fold,'_results.csv',sep='')
     
     # clean data 1
     data_1 = data_1[, -1]

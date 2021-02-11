@@ -5,8 +5,8 @@
 rm(list = ls())
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
-data_names = c('data_20_4_4', 'data_40_4_4', 'data_60_4_4', 'data_80_4_4', 'data_100_4_4')
-# data_names = c('data_80_4_4')
+# data_names = c('data_20_4_4', 'data_40_4_4', 'data_60_4_4', 'data_80_4_4', 'data_100_4_4')
+data_names = 'data'
 
 for (data_name in data_names) {
   
@@ -17,7 +17,11 @@ for (data_name in data_names) {
     DEEP_patterns = read.csv(DEEP_patterns_csv)
     DEEP_patterns = DEEP_patterns[,-which(colnames(DEEP_patterns) == 'X')]
     
+    causal_self_training = read.csv(paste(data_name,'/causal_trees_self_training/causal_tree_self_training_batch_',n_batch,'.csv',sep=""))
+    causal_self_training = causal_self_training[ , -c(1, 24)]
+    
     test_csv = paste(data_name,'/deep_self_training/deep_self_training_batch_',n_batch,'.csv',sep = "")
+    write.csv(causal_self_training, test_csv, row.names = FALSE)
     test = read.csv(test_csv)
     colnames(test) = toupper(colnames(test))
     

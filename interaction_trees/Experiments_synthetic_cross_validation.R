@@ -2,21 +2,24 @@
 # Output: interaction trees result
 
 remove(list = ls())
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 source('Functions-IT.R')
 
 ## interaction trees ####
 # =============================================================
-# Shisheng starts here... 
+# SZ starts here... 
 # =============================================================
 # import data 
 bootstrap = 25    # recommanded min 25 max 100
-n_variables_groups = c('20','40','60','80','100')
-n_variables_groups = c('40','60','80','100')
-n_variables_groups = c('40')
+# data_names = c('data_20_4_4','data_40_4_4','data_60_4_4','data_80_4_4','data_100_4_4')
+data_names = "data"
 
-dir.create('../synthetic_data/data_60000/interaction_trees_cross_validation')
+n_variables = 20    # 20 40 60 80 100
 
-for (n_variables in n_variables_groups) {
+
+for (data_name in data_names) {
+  
+  dir.create(paste('../synthetic_data/',data_name,'/interaction_trees_cross_validation', sep=""))
   
   for (n_batch in 1:10) {
     
@@ -24,20 +27,20 @@ for (n_variables in n_variables_groups) {
       
       start_time <- Sys.time()
       
-      # file_1 = paste('../synthetic_data/data_',n_variables,'_4_4/causal_trees_cross_validation/causal_tree_cross_validation_batch_',n_batch,'_fold_',n_fold,'_train.csv',sep='')
-      # data_1 = read.csv(file_1)
-      # file_2 = paste('../synthetic_data/data_',n_variables,'_4_4/causal_trees_cross_validation/causal_tree_cross_validation_batch_',n_batch,'_fold_',n_fold,'_test.csv',sep='')
-      # data_2 = read.csv(file_2)
-      # output_file = paste('../synthetic_data/data_',n_variables,'_4_4/interaction_trees_cross_validation/interaction_trees_cross_validation_batch_',n_batch,'_fold_',n_fold,'_results.csv',sep='')
-      # output_png = paste('../synthetic_data/data_',n_variables,'_4_4/interaction_trees_cross_validation/interaction_trees_cross_validation_batch_',n_batch,'_fold_',n_fold,'_results.png',sep='')
-      
-      # for timing
-      file_1 = paste('../synthetic_data/data_60000/causal_trees_cross_validation/causal_tree_cross_validation_batch_',n_batch,'_fold_',n_fold,'_train.csv',sep='')
+      file_1 = paste('../synthetic_data/',data_name,'/causal_trees_cross_validation/causal_tree_cross_validation_batch_',n_batch,'_fold_',n_fold,'_train.csv',sep='')
       data_1 = read.csv(file_1)
-      file_2 = paste('../synthetic_data/data_60000/causal_trees_cross_validation/causal_tree_cross_validation_batch_',n_batch,'_fold_',n_fold,'_test.csv',sep='')
+      file_2 = paste('../synthetic_data/',data_name,'/causal_trees_cross_validation/causal_tree_cross_validation_batch_',n_batch,'_fold_',n_fold,'_test.csv',sep='')
       data_2 = read.csv(file_2)
-      output_file = paste('../synthetic_data/data_60000/interaction_trees_cross_validation/interaction_trees_cross_validation_batch_',n_batch,'_fold_',n_fold,'_results.csv',sep='')
-      output_png = paste('../synthetic_data/data_60000/interaction_trees_cross_validation/interaction_trees_cross_validation_batch_',n_batch,'_fold_',n_fold,'_results.png',sep='')
+      output_file = paste('../synthetic_data/',data_name,'/interaction_trees_cross_validation/interaction_trees_cross_validation_batch_',n_batch,'_fold_',n_fold,'_results.csv',sep='')
+      output_png = paste('../synthetic_data/',data_name,'/interaction_trees_cross_validation/interaction_trees_cross_validation_batch_',n_batch,'_fold_',n_fold,'_results.png',sep='')
+      
+      # # for timing
+      # file_1 = paste('../synthetic_data/data_60000/causal_trees_cross_validation/causal_tree_cross_validation_batch_',n_batch,'_fold_',n_fold,'_train.csv',sep='')
+      # data_1 = read.csv(file_1)
+      # file_2 = paste('../synthetic_data/data_60000/causal_trees_cross_validation/causal_tree_cross_validation_batch_',n_batch,'_fold_',n_fold,'_test.csv',sep='')
+      # data_2 = read.csv(file_2)
+      # output_file = paste('../synthetic_data/data_60000/interaction_trees_cross_validation/interaction_trees_cross_validation_batch_',n_batch,'_fold_',n_fold,'_results.csv',sep='')
+      # output_png = paste('../synthetic_data/data_60000/interaction_trees_cross_validation/interaction_trees_cross_validation_batch_',n_batch,'_fold_',n_fold,'_results.png',sep='')
       
       # clean data 1
       data_1 = data_1[, -1]

@@ -2,17 +2,17 @@
 # Output: bias
 
 rm(list = ls())
-# setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 library(dplyr)
 library(matrixStats)
 source('get_contingency_table.R')
 source('get_causal_effect_from_contingency_table.R')
 
-# # import data
-# data_name = 'US_census'
-# data_treatment = 'educ.12'
-# data_outcome = 'income.50K'
+# import data
+data_name = 'US_census'
+data_treatment = 'educ.12'
+data_outcome = 'income.50K'
 
 # # email analytics
 # data_name = 'email_analytics'
@@ -24,10 +24,10 @@ source('get_causal_effect_from_contingency_table.R')
 # data_treatment = 'segment'
 # data_outcome = 'visit'
 
-# email analytics women
-data_name = 'email_analytics_women'
-data_treatment = 'segment'
-data_outcome = 'visit'
+# # email analytics women
+# data_name = 'email_analytics_women'
+# data_treatment = 'segment'
+# data_outcome = 'visit'
 
 # # marketing campaign
 # data_name = 'marketing_campaign'
@@ -50,14 +50,16 @@ data_outcome = 'visit'
 # data_outcome = 'visit'
 
 ################################################################################
+dir.create(paste('../real_world_data/data/model_vs_contingency_table_', data_name, '_deep/results', sep=''))
+
 save_bias = data.frame(matrix(nrow = 20, ncol = 3))
 
 for (n_batch in 1:10) {
   for (n_fold in 1:2) {
     
-    ground_truth_file = paste('data_',data_name,'/model_vs_contingency_table_',data_name,'/cross_validation_time_',n_batch,'_fold_',n_fold,'_as_ground_truth.csv',sep = "")
-    patterns_file = paste('data_',data_name,'/model_vs_contingency_table_',data_name,'_deep/cross_validation_batch_',n_batch,'_fold_',n_fold,'_patterns.csv',sep="")
-    output_file = paste('data_',data_name,'/model_vs_contingency_table_',data_name,'_deep/results/cross_validation_batch_',n_batch,'_fold_',n_fold,'_results.csv',sep="")
+    ground_truth_file = paste('data/model_vs_contingency_table_',data_name,'/cross_validation_time_',n_batch,'_fold_',n_fold,'_as_ground_truth.csv',sep = "")
+    patterns_file = paste('data/model_vs_contingency_table_',data_name,'_deep/cross_validation_batch_',n_batch,'_fold_',n_fold,'_patterns.csv',sep="")
+    output_file = paste('data/model_vs_contingency_table_',data_name,'_deep/results/cross_validation_batch_',n_batch,'_fold_',n_fold,'_results.csv',sep="")
     
     # clean patterns
     patterns = read.csv(patterns_file)
@@ -139,7 +141,7 @@ save_bias[1, 2] = mean(save_bias[,1])
 save_bias[1, 3] = rowSds(t(save_bias[,1]))
 colnames(save_bias) = c('bias', 'mean_bias', 'std_bias')
 
-write.csv(save_bias, paste('data_',data_name,'/model_vs_contingency_table_',data_name,'_final_weighted_average_bias_table_deep.csv', sep=""))
+write.csv(save_bias, paste('data/model_vs_contingency_table_',data_name,'_final_weighted_average_bias_table_deep.csv', sep=""))
 
 
 

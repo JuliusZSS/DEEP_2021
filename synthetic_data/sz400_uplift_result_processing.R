@@ -11,8 +11,8 @@ py = 4
 
 number_of_batches = 10
 
-folder_names = c('data_20_4_4','data_40_4_4','data_60_4_4','data_80_4_4','data_100_4_4')
-# folder_names = c('data')
+# folder_names = c('data_20_4_4','data_40_4_4','data_60_4_4','data_80_4_4','data_100_4_4')
+folder_names = 'data'
 
 for (folder_name in folder_names) {
 

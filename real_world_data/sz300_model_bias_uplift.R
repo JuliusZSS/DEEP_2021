@@ -15,12 +15,12 @@ library(devtools)
 
 `%nin%` = Negate(`%in%`)
 
-# # US census
-# data_name = 'US_census'
-# data_folder = 'data_US_census/model_vs_contingency_table_US_census_uplift'
-# output_name = 'data_US_census/model_vs_contingency_table_US_census_final_weighted_average_bias_table_uplift.csv'
-# treatment = 'educ.12'
-# outcome = 'income.50K'
+# US census
+data_name = 'US_census'
+data_folder = 'data_US_census/model_vs_contingency_table_US_census_uplift'
+output_name = 'data_US_census/model_vs_contingency_table_US_census_final_weighted_average_bias_table_uplift.csv'
+treatment = 'educ.12'
+outcome = 'income.50K'
 
 # # marketing campaign
 # data_name = 'marketing_campaign'
