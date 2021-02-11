@@ -19,4 +19,5 @@ To run experiments using real-world data:
 6. in real_world_data folder, run sz200 sz201 to analyse interaction tree results
 7. rename real_world_data/data folder as real_world_data/data_US_census
 8. in uplift folder, run main_real_world_data_US_census.py to get uplift tree results 
-9. in synthetic_data folder, run sz300 to analyse uplift tree results
+9. in real_world_data folder, run sz300 to analyse uplift tree results
+
